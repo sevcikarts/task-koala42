@@ -22,7 +22,20 @@ export const DataContext = createContext({} as DataContextType);
 
 export const DataContextProvider: FC<DataContextProps> = ({ children }) => {
   const dataJson = dataJSON;
-  const [records, setRecords] = useState<IMainRecord[]>(dataJson);
+
+  const removeMainDataDuplicatesById = (
+    arr: IMainRecord[],
+    prop: IMainData["ID"]
+  ) => {
+    return arr.filter(
+      (obj, index, self) =>
+        index === self.findIndex((t) => t.data[prop] === obj.data[prop])
+    );
+  };
+
+  const [records, setRecords] = useState<IMainRecord[]>(
+    removeMainDataDuplicatesById(dataJson, "ID")
+  );
 
   const deleteMain = (id: IMainData["ID"]) => {
     const filteredRecords = records.filter((record) => record.data.ID !== id);
@@ -88,7 +101,5 @@ export const DataContextProvider: FC<DataContextProps> = ({ children }) => {
 
   const value = { records, deleteNemesis, deleteSecrete, deleteMain };
 
-  return (
-    <DataContext.Provider value={value}>{children}</DataContext.Provider>
-  );
+  return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 };

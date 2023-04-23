@@ -14,8 +14,8 @@ export default function DataTable() {
       <Table aria-label="collapsible table">
         <TableCellHeader data={records[0]?.data} />
         <TableBody>
-          {records.map((row, index) => (
-            <RowMain key={index} row={row} />
+          {records.map((row) => (
+            <RowMain key={row.data.ID} row={row} />
           ))}
         </TableBody>
       </Table>

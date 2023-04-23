@@ -8,7 +8,7 @@ export interface IMainRecord {
 }
 
 export interface IMainData {
-  ID: string;
+  [key: string]: string;
   Name: string;
   Gender: string;
   Ability: string;

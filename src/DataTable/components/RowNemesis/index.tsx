@@ -15,7 +15,7 @@ const RowNemesis = (props: { row: INemesisRecord }) => {
       onDelete={deleteNemesis}
       records={row.children.has_secrete?.records}
       children={row.children.has_secrete?.records.map((row, index) => (
-        <RowSecrete key={index} row={row} />
+        <RowSecrete key={row.data.ID} row={row} />
       ))}
     />
   );
