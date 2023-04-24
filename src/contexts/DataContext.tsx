@@ -13,9 +13,9 @@ interface DataContextProps {
 
 interface DataContextType {
   records: IMainRecord[];
-  deleteNemesis: (id: INemesisData["ID"]) => void;
-  deleteSecrete: (id: ISecretData["ID"]) => void;
-  deleteMain: (id: IMainData["ID"]) => void;
+  deleteNemesisRecord: (id: INemesisData["ID"]) => void;
+  deleteSecreteRecord: (id: ISecretData["ID"]) => void;
+  deleteMainRecord: (id: IMainData["ID"]) => void;
 }
 
 export const DataContext = createContext({} as DataContextType);
@@ -37,7 +37,7 @@ export const DataContextProvider: FC<DataContextProps> = ({ children }) => {
     removeMainDataDuplicatesById(dataJson, "ID")
   );
 
-  const deleteMain = useCallback(
+  const deleteMainRecord = useCallback(
     (id: IMainData["ID"]) => {
       const filteredRecords = records.filter((record) => record.data.ID !== id);
       setRecords(filteredRecords);
@@ -45,7 +45,7 @@ export const DataContextProvider: FC<DataContextProps> = ({ children }) => {
     [records]
   );
 
-  const deleteNemesis = useCallback(
+  const deleteNemesisRecord = useCallback(
     (id: INemesisData["ID"]) => {
       const newData = records.map((item) => {
         if (item.children.has_nemesis) {
@@ -70,7 +70,7 @@ export const DataContextProvider: FC<DataContextProps> = ({ children }) => {
     [records]
   );
 
-  const deleteSecrete = useCallback(
+  const deleteSecreteRecord = useCallback(
     (id: ISecretData["ID"]) => {
       const newData = records.map((item) => {
         if (item.children.has_nemesis) {
@@ -109,7 +109,7 @@ export const DataContextProvider: FC<DataContextProps> = ({ children }) => {
     [records]
   );
 
-  const value = { records, deleteNemesis, deleteSecrete, deleteMain };
+  const value = { records, deleteNemesisRecord, deleteSecreteRecord, deleteMainRecord };
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 };

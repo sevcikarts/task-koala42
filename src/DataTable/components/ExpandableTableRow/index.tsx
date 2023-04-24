@@ -15,25 +15,25 @@ import {
   ISecretRecord,
 } from "../../../data/types";
 import TableCellHeader from "../../../components/TableCellHeader";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Button from "../../../components/Button";
 
-interface RowWithNestedTableProps {
+interface ExpandableTableRowProps {
   children?: React.ReactNode;
   onDelete: (id: string) => void;
   records?: INemesisRecord[] | ISecretRecord[] | IMainRecord[];
   row: INemesisRecord | ISecretRecord | IMainRecord;
 }
 
-const RowWithNestedTable = ({
+const ExpandableTableRow = ({
   row,
   onDelete,
   records,
   children,
-}: RowWithNestedTableProps) => {
+}: ExpandableTableRowProps) => {
   const [open, setOpen] = useState(false);
 
-  const cells = React.useMemo(
+  const cells = useMemo(
     () =>
       Object.values(row.data)?.map((item, index) => (
         <TableCell key={index} align="right">
@@ -81,4 +81,4 @@ const RowWithNestedTable = ({
     </>
   );
 };
-export default RowWithNestedTable;
+export default ExpandableTableRow;

@@ -1,22 +1,22 @@
 import { useContext } from "react";
-import RowWithNestedTable from "../RowWithNestedTable";
+import ExpandableTableRow from "../ExpandableTableRow";
 import { DataContext } from "../../../contexts/DataContext";
 import { IMainRecord } from "../../../data/types";
-import RowNemesis from "../RowNemesis";
+import NemesisRow from "../NemesisRow";
 
-const RowMain = (props: { row: IMainRecord }) => {
+const MainRow = (props: { row: IMainRecord }) => {
   const { row } = props;
-  const { deleteMain } = useContext(DataContext);
+  const { deleteMainRecord } = useContext(DataContext);
 
   return (
-    <RowWithNestedTable
+    <ExpandableTableRow
       row={row}
-      onDelete={deleteMain}
+      onDelete={deleteMainRecord}
       records={row.children?.has_nemesis?.records}
       children={row.children?.has_nemesis?.records.map((row) => (
-        <RowNemesis key={row.data.ID} row={row} />
+        <NemesisRow key={row.data.ID} row={row} />
       ))}
     />
   );
 };
-export default RowMain;
+export default MainRow;
