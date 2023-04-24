@@ -1,4 +1,4 @@
-import { FC, ReactNode, createContext, useState } from "react";
+import { FC, ReactNode, createContext, useState, useCallback } from "react";
 import dataJSON from "../data/example-data.json";
 import {
   IMainRecord,
@@ -37,67 +37,77 @@ export const DataContextProvider: FC<DataContextProps> = ({ children }) => {
     removeMainDataDuplicatesById(dataJson, "ID")
   );
 
-  const deleteMain = (id: IMainData["ID"]) => {
-    const filteredRecords = records.filter((record) => record.data.ID !== id);
-    setRecords(filteredRecords);
-  };
+  const deleteMain = useCallback(
+    (id: IMainData["ID"]) => {
+      const filteredRecords = records.filter((record) => record.data.ID !== id);
+      setRecords(filteredRecords);
+    },
+    [records]
+  );
 
-  const deleteNemesis = (id: INemesisData["ID"]) => {
-    const newData = records.map((item) => {
-      if (item.children.has_nemesis) {
-        const filteredRecords = item.children.has_nemesis.records.filter(
-          (record) => record.data.ID !== id
-        );
-        return {
-          ...item,
-          children: {
-            has_nemesis: {
-              ...item.children.has_nemesis,
-              records: filteredRecords,
-            },
-          },
-        };
-      }
-      return item;
-    });
-
-    setRecords(newData);
-  };
-
-  const deleteSecrete = (id: ISecretData["ID"]) => {
-    const newData = records.map((item) => {
-      if (item.children.has_nemesis) {
-        const newRecords = item.children.has_nemesis.records.map((record) => {
-          if (record.children.has_secrete) {
-            const filteredSecretes = record.children.has_secrete.records.filter(
-              (secrete) => secrete.data.ID !== id
-            );
-            return {
-              ...record,
-              children: {
-                has_secrete: {
-                  ...record.children.has_secrete,
-                  records: filteredSecretes,
-                },
+  const deleteNemesis = useCallback(
+    (id: INemesisData["ID"]) => {
+      const newData = records.map((item) => {
+        if (item.children.has_nemesis) {
+          const filteredRecords = item.children.has_nemesis.records.filter(
+            (record) => record.data.ID !== id
+          );
+          return {
+            ...item,
+            children: {
+              has_nemesis: {
+                ...item.children.has_nemesis,
+                records: filteredRecords,
               },
-            };
-          }
-          return record;
-        });
-        return {
-          ...item,
-          children: {
-            has_nemesis: {
-              ...item.children.has_nemesis,
-              records: newRecords,
             },
-          },
-        };
-      }
-      return item;
-    });
-    setRecords(newData);
-  };
+          };
+        }
+        return item;
+      });
+
+      setRecords(newData);
+    },
+    [records]
+  );
+
+  const deleteSecrete = useCallback(
+    (id: ISecretData["ID"]) => {
+      const newData = records.map((item) => {
+        if (item.children.has_nemesis) {
+          const newRecords = item.children.has_nemesis.records.map((record) => {
+            if (record.children.has_secrete) {
+              const filteredSecretes =
+                record.children.has_secrete.records.filter(
+                  (secrete) => secrete.data.ID !== id
+                );
+              return {
+                ...record,
+                children: {
+                  has_secrete: {
+                    ...record.children.has_secrete,
+                    records: filteredSecretes,
+                  },
+                },
+              };
+            }
+            return record;
+          });
+          return {
+            ...item,
+            children: {
+              has_nemesis: {
+                ...item.children.has_nemesis,
+                records: newRecords,
+              },
+            },
+          };
+        }
+        return item;
+      });
+      setRecords(newData);
+    },
+    [records]
+  );
 
   const value = { records, deleteNemesis, deleteSecrete, deleteMain };
 

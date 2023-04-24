@@ -8,13 +8,13 @@ import RowMain from "./components/RowMain";
 import TableCellHeader from "../components/TableCellHeader";
 import { IMainData } from "../data/types";
 
-export default function DataTable() {
+const DataTable = () => {
   const { records } = useContext(DataContext);
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableCellHeader<IMainData> data={records[0]?.data} />
-        <TableBody >
+        <TableBody>
           {records.map((row) => (
             <RowMain key={row.data.ID} row={row} />
           ))}
@@ -22,4 +22,5 @@ export default function DataTable() {
       </Table>
     </TableContainer>
   );
-}
+};
+export default DataTable;

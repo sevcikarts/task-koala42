@@ -8,7 +8,8 @@ const Button: FC<ButtonProps> = (props) => {
       sx={{
         bgcolor: greenColor,
         color: textLightColor,
-   borderRadius: 5,
+        minWidth: "40px",
+        borderRadius: 5,
         "&:hover": {
           backgroundColor: "red",
         },
