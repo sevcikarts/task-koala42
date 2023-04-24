@@ -67,7 +67,7 @@ const ExpandableTableRow = ({
           <TableCell sx={{ padding: 0, borderBottom: "none" }} colSpan={6}>
             <Collapse sx={{ paddingLeft: 0 }} in={open} timeout="auto">
               {records && records[0]?.data && (
-                <Box sx={{ marginTop: 1, marginLeft: 0, marginRight: 10 }}>
+                <Box sx={{ marginTop: 1, marginLeft: 5 }}>
                   <Table size="small">
                     <TableCellHeader data={records[0]?.data} />
                     <TableBody>{children}</TableBody>

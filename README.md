@@ -2,4 +2,4 @@
 
 ## Getting Started 🚀
 - type `yarn` to install dependencies
-- type `yarn dev` for start application
+- type `yarn dev` for start application 
