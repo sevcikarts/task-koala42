@@ -9,15 +9,19 @@ import TableRow from "@mui/material/TableRow";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import { IMainRecord, INemesisRecord, ISecretRecord } from "../../data/types";
-import TableCellHeader from "../../DataTable/components/TableCellHeader";
+import {
+  IMainRecord,
+  INemesisRecord,
+  ISecretRecord,
+} from "../../../data/types";
+import TableCellHeader from "../../../components/TableCellHeader";
 import { useState } from "react";
-import { Button } from "@mui/material";
+import Button from "../../../components/Button";
 
 interface RowWithNestedTableProps {
   children?: React.ReactNode;
   onDelete: (id: string) => void;
-  records?: Array<INemesisRecord> | Array<ISecretRecord> | Array<IMainRecord>;
+  records?: INemesisRecord[] | ISecretRecord[] | IMainRecord[];
   row: INemesisRecord | ISecretRecord | IMainRecord;
 }
 
@@ -41,7 +45,7 @@ const RowWithNestedTable = ({
 
   return (
     <>
-      <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
+      <TableRow>
         <TableCell>
           {records && records?.length > 0 && (
             <IconButton
@@ -54,27 +58,16 @@ const RowWithNestedTable = ({
           )}
         </TableCell>
         {cells}
-        <TableCell key="onclick" align="right">
-          <Button
-            variant="contained"
-            sx={{
-              bgcolor: "primary.light",
-              "&:hover": {
-                backgroundColor: "red",
-              },
-            }}
-            onClick={() => onDelete(row.data.ID)}
-          >
-            x
-          </Button>
+        <TableCell sx={{ borderBottom: "none" }} key="onclick" align="right">
+          <Button onClick={() => onDelete(row.data.ID)}>x</Button>
         </TableCell>
       </TableRow>
       {children && (
         <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-            <Collapse in={open} timeout="auto">
+          <TableCell sx={{ padding: 0, borderBottom: "none" }} colSpan={6}>
+            <Collapse sx={{ paddingLeft: 0 }} in={open} timeout="auto">
               {records && records[0]?.data && (
-                <Box sx={{ margin: 1 }}>
+                <Box sx={{ marginTop: 1, marginLeft: 0, marginRight: 10 }}>
                   <Table size="small">
                     <TableCellHeader data={records[0]?.data} />
                     <TableBody>{children}</TableBody>

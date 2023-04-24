@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import RowWithNestedTable from "../../../components/RowWithNestedTable";
+import RowWithNestedTable from "../RowWithNestedTable";
 import { DataContext } from "../../../contexts/DataContext";
 
 const RowSecrete = (props: { row: any }) => {

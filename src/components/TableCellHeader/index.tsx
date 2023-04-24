@@ -1,20 +1,21 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import TableCell from "@mui/material/TableCell";
-import { IMainData, INemesisData, ISecretData } from "../../../data/types";
 import { TableHead, TableRow } from "@mui/material";
+import { greenColor, textLightColor } from "../../constants";
 
-interface TableCellHeaderProps {
-  data: IMainData | ISecretData | INemesisData;
+interface TableCellHeaderProps<T> {
+  data: T;
 }
 
-const TableCellHeader = ({ data }: TableCellHeaderProps) => {
+const TableCellHeader = <T extends {}>({ data }: TableCellHeaderProps<T>) => {
   const cells = useMemo(
     () =>
       Object.keys(data)?.map((item, index) => (
         <TableCell
           sx={{
-            bgcolor: "primary.light",
-            fontWeight: 600,
+            bgcolor: greenColor,
+            color: textLightColor,
+            fontWeight: 600
           }}
           key={index}
           align="right"
@@ -30,14 +31,16 @@ const TableCellHeader = ({ data }: TableCellHeaderProps) => {
       <TableRow>
         <TableCell
           sx={{
-            bgcolor: "primary.light",
+            bgcolor: greenColor,
+            color: textLightColor
           }}
         />
         {cells}
         <TableCell
           sx={{
-            bgcolor: "primary.light",
-            fontWeight: 600,
+            bgcolor: greenColor,
+            color: textLightColor,
+            fontWeight: 600
           }}
           align="right"
         >

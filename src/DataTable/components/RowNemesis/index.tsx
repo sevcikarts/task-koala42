@@ -1,6 +1,5 @@
-
 import { useContext } from "react";
-import RowWithNestedTable from "../../../components/RowWithNestedTable";
+import RowWithNestedTable from "../RowWithNestedTable";
 import { DataContext } from "../../../contexts/DataContext";
 import { INemesisRecord } from "../../../data/types";
 import RowSecrete from "../RowSecrete";
@@ -14,7 +13,7 @@ const RowNemesis = (props: { row: INemesisRecord }) => {
       row={row}
       onDelete={deleteNemesis}
       records={row.children.has_secrete?.records}
-      children={row.children.has_secrete?.records.map((row, index) => (
+      children={row.children.has_secrete?.records.map((row) => (
         <RowSecrete key={row.data.ID} row={row} />
       ))}
     />
